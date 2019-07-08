@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+*{
+  box-sizing: border-box;
+}
+.game-over, .game-start{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  margin: 0 auto;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  background-color: #2d2d2d;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+  font-family:'Montserrat', 'Arial';
+  letter-spacing: 5px;
+  text-align: center;
+  display: none;
+}
+
+.game-start{
+  box-shadow: 0 0 20px 5px rgba(0, 28, 55, 0.5);
+  background-color: #001c37;
+  color: #fde428;
+}
+
+.game-over h1, .game-start h1{
+  margin-bottom: 40px;
+}
+
+.game-over .restart-btn, .game-start .start-btn{
+  background-color: #fde52c;
+  display: inline-block;
+  padding: 14px;
+  color: #002e5b;
+  font-size: 20px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.game-over .restart-btn:hover,.game-start .start-btn:hover{
+  background-color: white;
+}
+
+.score{
+  position: absolute;
+  right: 8%;
+  top: 8%;
+  color: black;
+  font-family:'Montserrat', 'Arial';
+  font-size: 6rem;
+  font-weight:600;
+}
