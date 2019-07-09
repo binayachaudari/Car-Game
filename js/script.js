@@ -1,3 +1,6 @@
+/**
+ * CONSTANT VARIABLES
+ */
 const CANVAS_WIDTH = 450,
   CANVAS_HEIGHT = window.innerHeight,
   CAR_HEIGHT = 75,
@@ -11,9 +14,15 @@ const CANVAS_WIDTH = 450,
 
 let carSpeed = 2;
 
+/**
+ * RESET BODY MARGIN AND PADDING
+ */
 document.body.style.margin = `0px`;
 document.body.style.padding = `0px`;
 
+/**
+ * ELEMENTS OF GAME
+ */
 const gameOverOverlay = document.querySelector('.game-over');
 const restartBtn = document.querySelector('.game-over .restart-btn');
 const gameStartOverlay = document.querySelector('.game-start');
@@ -24,6 +33,9 @@ gameStartOverlay.style.display = 'block';
 
 const canvas = document.createElement('canvas');
 
+/**
+ * CANVAS Initiliaze
+ */
 let canvasInit = () => {
   canvas.width = CANVAS_WIDTH;
   canvas.height = CANVAS_HEIGHT;
@@ -49,6 +61,9 @@ let generateRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
+/**
+ * CAR CLASS
+ */
 class Car {
   constructor(car) {
     this.lane = car.lane;
@@ -59,6 +74,9 @@ class Car {
     // this.src = car.imgSrc;
   }
 
+  /**
+   * DRAWS RECTANGLE FOR PLAYER AND ENEMY CAR
+   */
   draw() {
     ctx.beginPath();
     // window.onload = ()=>{
@@ -69,18 +87,27 @@ class Car {
     ctx.fill();
   }
 
+  /**
+   * UPDATES POSTION OF CAR ON EACH FRAME
+   */
   update() {
     this.x = (this.lane + 0.5) * LANE_WIDTH - (CAR_WIDTH / 2);
     this.y += this.speed;
   }
 }
 
-
+/**
+ * CLASS LANE
+ */
 class Lane {
   constructor(xCoordinate) {
     this.x = xCoordinate;
   }
 
+
+  /**
+   * DRAWS LANE
+   */
   draw() {
     ctx.beginPath();
     ctx.moveTo(this.x, 0);
@@ -92,11 +119,17 @@ class Lane {
     ctx.stroke();
   }
 
+  /**
+   * ANIMATE LANE
+   */
   update() {
     offset += carSpeed;
   }
 }
 
+/**
+ * CAR CHANGES LANE ON KEYDOWN
+ */
 document.addEventListener('keydown', (e) => {
   if (e.keyCode == 65 || e.keyCode == 37) {
     if (playerCar.lane > 0) {
@@ -115,6 +148,9 @@ document.addEventListener('keydown', (e) => {
   }
 })
 
+/**
+ * CLEAR CANVAS AND REDRAW
+ */
 let updateAll = () => {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   playerCar.draw();
@@ -124,6 +160,11 @@ let updateAll = () => {
   firstLane.draw();
   secondLane.draw();
 }
+
+/**
+ * DETECTS COLLISION BETWEEN PLAYER CAR AND ENEMY CAR
+ * @param  {Object} enemyCarInstance Instance of each enemy car
+ */
 
 let collisionDetection = (enemyCarInstance) => {
   if (playerCar.x < enemyCarInstance.x + CAR_WIDTH &&
@@ -135,15 +176,22 @@ let collisionDetection = (enemyCarInstance) => {
   }
 }
 
-let updateScore = (enemyInstance) =>{
-  if(enemyInstance.y + CAR_HEIGHT > CANVAS_HEIGHT){
-    inGameScore += (1/100);
+/**
+ * UPDATES SCORE
+ * @param  {Object} enemyInstance Instance of each enemy car
+ */
+let updateScore = (enemyInstance) => {
+  if (enemyInstance.y + CAR_HEIGHT > CANVAS_HEIGHT) {
+    inGameScore += (1 / 100);
   }
 }
 
-let carGeneration,
+let carGeneration, //Variable Decleration for setInterval.
   carAnimation;
 
+/**
+ * STARTS GENERATING ENEMY CARS AND ANIMATES THEM
+ */
 let startGame = () => {
   carGeneration = setInterval(() => {
     let enemyCar = new Car(enemy);
@@ -172,11 +220,18 @@ let startGame = () => {
   }, 1000 / 60);
 }
 
+/**
+ * STOPS THE GAME [GAME-OVER!]
+ */
 let stopGame = () => {
   clearInterval(carGeneration);
   clearInterval(carAnimation);
 }
 
+
+/**
+ * RESTARTS GAME ON RESTART BUTTON CLICK
+ */
 restartBtn.addEventListener('click', (e) => {
   gameOverOverlay.style.display = 'block';
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -186,7 +241,9 @@ restartBtn.addEventListener('click', (e) => {
 })
 
 
-
+/**
+ * GLOBAL VARIABLES
+ */
 let firstLane,
   secondLane;
 
@@ -199,11 +256,11 @@ let offset;
 let enemyCarList;
 
 let playerImage = new Image(),
-    enemyImage = new Image();
+  enemyImage = new Image();
 
-playerImage.src = './images/player.png';
-
-enemyImage.src = './images/enemy.png'
+// playerImage.src = './images/player.png';
+//
+// enemyImage.src = './images/enemy.png'
 
 let player = {
   lane: SECOND_LANE,
@@ -221,6 +278,9 @@ let enemy = {
   // imgSrc: enemyImage.src
 }
 
+/**
+ * RESETS GAME
+ */
 let reset = () => {
   score.innerHTML = '0';
   firstLane = new Lane(LANE_WIDTH);
@@ -239,12 +299,19 @@ let reset = () => {
   inGameScore = 0;
 }
 
+/**
+ * INITILIAZE GAME
+ */
 let init = () => {
   canvasInit();
   reset();
   startGame();
 }
 
+/**
+ * STARTS GAME 
+ * @type {String}
+ */
 startBtn.addEventListener('click', (e) => {
   gameStartOverlay.style.display = 'none';
   init();
