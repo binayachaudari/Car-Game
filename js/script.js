@@ -9,7 +9,7 @@ const CANVAS_WIDTH = 450,
   FIRST_LANE = 0,
   SECOND_LANE = 1,
   THIRD_LANE = 2,
-  LEVEL_UP_SPEED = 0.025,
+  LEVEL_UP_SPEED = 0.25,
   LANE_WIDTH = CANVAS_WIDTH / 3;
 
 let carSpeed = 2;
@@ -27,7 +27,6 @@ const gameOverOverlay = document.querySelector('.game-over');
 const restartBtn = document.querySelector('.game-over .restart-btn');
 const gameStartOverlay = document.querySelector('.game-start');
 const startBtn = document.querySelector('.game-start .start-btn');
-const score = document.querySelector('.score');
 
 gameStartOverlay.style.display = 'block';
 
@@ -47,6 +46,25 @@ let canvasInit = () => {
 }
 
 let ctx = canvas.getContext('2d');
+
+/**
+ * CANVAS SETUP FOR SCORE
+ */
+let scoreCanvas = () => {
+  ctx.font = '18px Montserrat';
+  ctx.fillStyle = 'white';
+  ctx.textAlign = "center";
+  ctx.fillText(`Score : ${inGameScore}`, 50, 30);
+}
+
+/**
+ * CANVAS SETUP FOR HIGHSCORE
+ */
+let highScoreCanvas = () => {
+  ctx.font = '14px Montserrat';
+  ctx.fillStyle = '#fde52c';
+  ctx.fillText(`High Score : ${localStorage.getItem('highScore') || 0}`, CANVAS_WIDTH - 70, 30);
+}
 
 /**
  * [generates Random Number]
@@ -105,9 +123,9 @@ class Lane {
     ctx.beginPath();
     ctx.moveTo(this.x, 0);
     ctx.lineTo(this.x, CANVAS_HEIGHT);
-    ctx.setLineDash([20, 15]);
+    ctx.setLineDash([20, 20]);
     ctx.lineDashOffset = -offset;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 3;
     ctx.strokeStyle = '#fff';
     ctx.stroke();
   }
@@ -152,6 +170,8 @@ let updateAll = () => {
   })
   firstLane.draw();
   secondLane.draw();
+  scoreCanvas();
+  highScoreCanvas();
 }
 
 /**
@@ -206,7 +226,6 @@ let startGame = () => {
     })
     firstLane.update();
     updateAll();
-    score.innerHTML = Math.floor(inGameScore);
   }, 1000 / 60);
 }
 
@@ -214,6 +233,9 @@ let startGame = () => {
  * STOPS THE GAME [GAME-OVER!]
  */
 let stopGame = () => {
+  if (localStorage.getItem('highScore') < inGameScore) {
+    localStorage.setItem('highScore', inGameScore);
+  }
   clearInterval(carGeneration);
   clearInterval(carAnimation);
 }
@@ -238,6 +260,7 @@ let firstLane,
 let playerCar;
 
 let inGameScore;
+let highScore;
 
 let offset;
 
@@ -270,7 +293,6 @@ let enemy = {
  * RESETS GAME
  */
 let reset = () => {
-  score.innerHTML = '0';
   firstLane = new Lane(LANE_WIDTH);
   secondLane = new Lane(LANE_WIDTH * 2);
   firstLane.draw();
@@ -282,7 +304,7 @@ let reset = () => {
   carSpeed = 2;
 
   enemyCarList = [];
-  offset = 0;
+  offset = 8;
 
   inGameScore = 0;
 }
@@ -294,6 +316,8 @@ let init = () => {
   canvasInit();
   reset();
   startGame();
+  scoreCanvas();
+  highScoreCanvas();
 }
 
 /**

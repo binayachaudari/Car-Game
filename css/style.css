@@ -43,13 +43,3 @@
 .game-over .restart-btn:hover,.game-start .start-btn:hover{
   background-color: white;
 }
-
-.score{
-  position: absolute;
-  right: 8%;
-  top: 8%;
-  color: black;
-  font-family:'Montserrat', 'Arial';
-  font-size: 6rem;
-  font-weight:600;
-}
