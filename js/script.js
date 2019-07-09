@@ -123,7 +123,7 @@ class Lane {
     ctx.beginPath();
     ctx.moveTo(this.x, 0);
     ctx.lineTo(this.x, CANVAS_HEIGHT);
-    ctx.setLineDash([20, 20]);
+    ctx.setLineDash([40, 55]);
     ctx.lineDashOffset = -offset;
     ctx.lineWidth = 3;
     ctx.strokeStyle = '#fff';
@@ -207,11 +207,12 @@ let carGeneration, //Variable Decleration for setInterval.
  */
 let startGame = () => {
   carGeneration = setInterval(() => {
+    enemy.speed = carSpeed;
     let enemyCar = new Car(enemy);
     enemyCar.lane = generateRandomNumber(0, 3);
     enemyCarList.push(enemyCar);
 
-    if (carSpeed < 5) {
+    if (carSpeed < 10) {
       carSpeed += LEVEL_UP_SPEED;
     }
 
@@ -304,7 +305,7 @@ let reset = () => {
   carSpeed = 2;
 
   enemyCarList = [];
-  offset = 8;
+  offset = 1;
 
   inGameScore = 0;
 }
