@@ -70,7 +70,7 @@ class Car {
     this.y = car.yPosition;
     this.color = car.color;
     this.speed = car.speed;
-    // this.src = car.imgSrc;
+    this.src = car.imgSrc;
   }
 
   /**
@@ -78,12 +78,7 @@ class Car {
    */
   draw() {
     ctx.beginPath();
-    // window.onload = ()=>{
-    //  ctx.drawImage(this.src, this.x, this.y);
-    // }
-    ctx.rect(this.x, this.y, CAR_WIDTH, CAR_HEIGHT);
-    ctx.fillStyle = this.color;
-    ctx.fill();
+    ctx.drawImage(this.src, this.x, this.y);
   }
 
   /**
@@ -251,16 +246,16 @@ let enemyCarList;
 let playerImage = new Image(),
   enemyImage = new Image();
 
-// playerImage.src = './images/player.png';
-//
-// enemyImage.src = './images/enemy.png'
+playerImage.src = './images/player.png';
+
+enemyImage.src = './images/enemy.png'
 
 let player = {
   lane: SECOND_LANE,
   yPosition: CANVAS_HEIGHT - CAR_WIDTH - OFFSET,
   color: 'blue',
   speed: 0,
-  // imgSrc: playerImage.src
+  imgSrc: playerImage
 }
 
 let enemy = {
@@ -268,7 +263,7 @@ let enemy = {
   yPosition: 0,
   color: 'red',
   speed: carSpeed,
-  // imgSrc: enemyImage.src
+  imgSrc: enemyImage
 }
 
 /**
