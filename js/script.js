@@ -181,8 +181,9 @@ let collisionDetection = (enemyCarInstance) => {
  * @param  {Object} enemyInstance Instance of each enemy car
  */
 let updateScore = (enemyInstance) => {
-  if (enemyInstance.y + CAR_HEIGHT > CANVAS_HEIGHT) {
-    inGameScore += (1 / 100);
+  if (enemyInstance.y > CANVAS_HEIGHT) {
+    inGameScore++;
+    enemyCarList.splice(enemyCarList.indexOf(enemyInstance), 1);
   }
 }
 
@@ -202,9 +203,6 @@ let startGame = () => {
       carSpeed += LEVEL_UP_SPEED;
     }
 
-    if (enemyCarList.length > 10) {
-      enemyCarList.splice(0, 5);
-    }
   }, 2000);
 
   carAnimation = setInterval(() => {
@@ -309,7 +307,7 @@ let init = () => {
 }
 
 /**
- * STARTS GAME 
+ * STARTS GAME
  * @type {String}
  */
 startBtn.addEventListener('click', (e) => {
