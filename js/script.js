@@ -48,7 +48,6 @@ let canvasInit = () => {
 
 let ctx = canvas.getContext('2d');
 
-
 /**
  * [generates Random Number]
  * @param  {Number} min minimum Number
@@ -103,7 +102,6 @@ class Lane {
   constructor(xCoordinate) {
     this.x = xCoordinate;
   }
-
 
   /**
    * DRAWS LANE
@@ -165,7 +163,6 @@ let updateAll = () => {
  * DETECTS COLLISION BETWEEN PLAYER CAR AND ENEMY CAR
  * @param  {Object} enemyCarInstance Instance of each enemy car
  */
-
 let collisionDetection = (enemyCarInstance) => {
   if (playerCar.x < enemyCarInstance.x + CAR_WIDTH &&
     playerCar.x + CAR_WIDTH > enemyCarInstance.x &&
@@ -209,11 +206,11 @@ let startGame = () => {
     enemyCarList.forEach((eachEnemy, index) => {
       eachEnemy.draw();
       eachEnemy.update();
-      updateAll();
       collisionDetection(eachEnemy);
       updateScore(eachEnemy);
     })
     firstLane.update();
+    updateAll();
     score.innerHTML = Math.floor(inGameScore);
   }, 1000 / 60);
 }
@@ -226,7 +223,6 @@ let stopGame = () => {
   clearInterval(carAnimation);
 }
 
-
 /**
  * RESTARTS GAME ON RESTART BUTTON CLICK
  */
@@ -237,7 +233,6 @@ restartBtn.addEventListener('click', (e) => {
   reset();
   startGame()
 })
-
 
 /**
  * GLOBAL VARIABLES
