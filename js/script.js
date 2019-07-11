@@ -78,65 +78,6 @@ let generateRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-/**
- * CAR CLASS
- */
-class Car {
-  constructor(car) {
-    this.lane = car.lane;
-    this.x = (this.lane + 0.5) * LANE_WIDTH - (CAR_WIDTH / 2); //FORMULA FOR CAR POSITION;
-    this.y = car.yPosition;
-    this.color = car.color;
-    this.speed = car.speed;
-    this.src = car.imgSrc;
-  }
-
-  /**
-   * DRAWS RECTANGLE FOR PLAYER AND ENEMY CAR
-   */
-  draw() {
-    ctx.beginPath();
-    ctx.drawImage(this.src, this.x, this.y);
-  }
-
-  /**
-   * UPDATES POSTION OF CAR ON EACH FRAME
-   */
-  update() {
-    this.x = (this.lane + 0.5) * LANE_WIDTH - (CAR_WIDTH / 2);
-    this.y += this.speed;
-  }
-}
-
-/**
- * CLASS LANE
- */
-class Lane {
-  constructor(xCoordinate) {
-    this.x = xCoordinate;
-  }
-
-  /**
-   * DRAWS LANE
-   */
-  draw() {
-    ctx.beginPath();
-    ctx.moveTo(this.x, 0);
-    ctx.lineTo(this.x, CANVAS_HEIGHT);
-    ctx.setLineDash([40, 55]);
-    ctx.lineDashOffset = -offset;
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#fff';
-    ctx.stroke();
-  }
-
-  /**
-   * ANIMATE LANE
-   */
-  update() {
-    offset += carSpeed;
-  }
-}
 
 /**
  * CAR CHANGES LANE ON KEYDOWN
